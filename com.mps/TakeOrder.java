@@ -1,5 +1,6 @@
 package com.mps;
 
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -15,17 +16,19 @@ public class TakeOrder {
 		cstList.add(new Customer(2, "Kavya", "Pen", 20, "Bangalore", 2022, "Feb", 10));
 		cstList.add(new Customer(3, "Nayana", "Book", 50, "Delhi", 2017, "March", 10));
 		cstList.add(new Customer(4, "John", "Watch", 2500, "Hyderabad", 2017, "April", 6));
-		cstList.add(new Customer(5, "Alice", "Mouse", 1500, "Pune", 2010, "May", 3));
+		cstList.add(new Customer(5, "Alice", "Mouse", 1500, "Pune", 2010, "March", 3));
 		cstList.add(new Customer(6, "Bob", "Pen", 250, "Goa", 2022, "June", 7));
-		cstList.add(new Customer(7, "David", "T-Shirt", 500, "Mysore", 2016, "July", 9));
+		cstList.add(new Customer(7, "David", "T-Shirt", 500, "Mysore", 2016, "Feb", 9));
 		cstList.add(new Customer(8, "Radha", "Bag", 1780, "Mangalore", 2013, "August", 10));
-		cstList.add(new Customer(9, "Prajwal", "Eraser", 10, "Kerala", 2022, "Sept", 7));
+		cstList.add(new Customer(9, "Prajwal", "Eraser", 10, "Kerala", 2022, "Feb", 7));
 		cstList.add(new Customer(10, "Krithi", "Earphone", 680, "Kashmir", 2024, "Oct", 8));
 		
 		TakeOrder.getHighOrder(cstList);
 		TakeOrder.getCatWiseOrder(cstList);
 		TakeOrder.getMaxPrice(cstList);
-		//TakeOrder.getFirstOrder(cstList);
+		TakeOrder.getAvgMonthlySpending(cstList);
+		TakeOrder.getMinOrderPrice(cstList);
+		TakeOrder.getFirstOrder(cstList);
 
 	}
 	//Find highest orders in the year
@@ -50,14 +53,25 @@ public class TakeOrder {
 		System.out.println();
 	}
 	
+	// Find average monthly spending
+	public static void getAvgMonthlySpending(List<Customer> cstList) {
+	    Map<String, Double> avgMonthlySpending = cstList.stream().collect(Collectors.groupingBy(Customer::getMoo, Collectors.averagingInt(Customer::getPrice)));
+	    avgMonthlySpending.forEach((month, avgPrice) -> System.out.println("Month: " + month + ", Average Spending: " + avgPrice));
+	    System.out.println();
+	}
 	
+	// Find the minimum order price
+	public static void getMinOrderPrice(List<Customer> cstList) {
+	    Optional<Customer> minP = cstList.stream().collect(Collectors.minBy(Comparator.comparingInt(Customer::getPrice)));
+        minP.ifPresent(c -> System.out.println("Category: " + c.getCategory() + "\nPrice: " + c.getPrice()));
+        System.out.println();
+	}
 	
-	public static void getFirstOrder(List<Customer> cstList){
-		Optional<Customer> highOrder=cstList.stream().max(Comparator.comparing(Customer :: getPrice));
-		Customer cstData=highOrder.get();
-		System.out.println("Name:"+cstData.getCtsName());
-		System.out.println("Price:"+cstData.getPrice());
-		System.out.println("Category:"+cstData.getCategory());
+	// Find the first order 
+	public static void getFirstOrder(List<Customer> cstList) {
+	    Optional<Customer> firstOrder = cstList.stream().min(Comparator.comparingInt(Customer::getYoo)); 
+	    firstOrder.ifPresent(c -> System.out.println("Name: " + c.getCtsName() + "\nCategory: " + c.getCategory() + "\nYear: " + c.getYoo()));
+	    System.out.println();
 	}
 
 }
