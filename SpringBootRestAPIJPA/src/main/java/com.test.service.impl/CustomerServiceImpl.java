@@ -48,21 +48,14 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public List<Customer> updateCustomer(Customer cst) {
-		try {
-			if(cst!=null) {
-				customerDao.updateCustomer(cst);
-			}
-		}
-		catch(RuntimeException e) {
-			e.printStackTrace();
-		}
+		customerDao.updateCustomer(cst);
 		
 		return customerDao.readAllCustomer();
 	}
 
 	@Override
 	public List<Customer> deleteCustomer(int id) {
-		
+		customerDao.deleteCustomer(id);
 		return customerDao.readAllCustomer();
 	}
 
