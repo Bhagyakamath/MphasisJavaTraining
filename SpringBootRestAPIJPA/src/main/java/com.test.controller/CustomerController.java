@@ -34,7 +34,7 @@ public class CustomerController {
 	
 	@PutMapping("/update/{id}")
 	public List<Customer> updateCustomer(@RequestBody Customer cst, @PathVariable("id") int id){
-		cst.getId();
+		cst.setId(id);
 		return service.updateCustomer(cst);
 	}
 	
